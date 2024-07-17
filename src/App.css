@@ -1621,3 +1621,77 @@ button {
   }
 }
 
+
+
+.seller_reg-body {
+  background: url('assets/bg.jpeg') no-repeat center center fixed; /* Change the URL to an appropriate food-related background image */
+  background-size: cover;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.seller_reg-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.seller_reg-form-box {
+ width: 90%;
+  margin: 0 auto;
+}
+
+#seller_reg-title {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #d35400; /* Food-related color */
+}
+
+.seller_reg-form-group {
+  margin-bottom: 15px;
+}
+
+.seller_reg-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: bold;
+}
+
+.seller_reg-form-group input, .seller_reg-form-group select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+.seller_reg-btn-field {
+  display: flex;
+  justify-content: center;
+}
+
+.seller_reg-submit {
+  background-color: #d35400; /* Food-related color */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.seller_reg-submit:hover {
+  background-color: #e67e22; /* Hover color */
+}

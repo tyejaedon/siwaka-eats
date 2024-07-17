@@ -1,9 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BuyerRegister = () => {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission logic here
+    navigate('/')
+    
   };
 
   return (

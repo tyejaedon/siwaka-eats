@@ -1,0 +1,50 @@
+1. Create a MySQL Database named seller 
+2. Create a table named registrations the code as follows: 
+
+CREATE TABLE `registrations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `personName` varchar(255) NOT NULL,
+  `businessName` varchar(255) NOT NULL,
+  `foodLicense` varchar(255) DEFAULT NULL,
+  `paymentMode` varchar(255) NOT NULL,
+  `businessImage` varchar(255) DEFAULT NULL,
+  `location` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+2. import the data from the file registation_data in the folder database 
+
+3. Create a table named menu_items as follows:
+
+ CREATE TABLE `menu_items` (
+  `menu_item` varchar(255) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `image` longblob,
+  `email` varchar(255) NOT NULL,
+  KEY `menu_items_ibfk_1` (`email`),
+  CONSTRAINT `menu_items_ibfk_1` FOREIGN KEY (`email`) REFERENCES `registrations` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+4. Import the data from menu_items_data 
+
+5. Open server.js in folder server 
+6. Change the database password and the user to your specifications 
+7. In your code editor terminal begin by intiating the server using npm run server 
+8. open a new terminal and run npm start 
+Note: the react project works well with the server on local host 3000 and the react project on 3001
+if by chance this is not the case change options in Corsoption (server.js) to the port running the react app. 
+
+9. Here are the credentials for the following users:
+bob@lol.com -> HELLOWORLD
+jackies@loop.com -> 12345678
+john_doe@gmail.com -> 12345678
+
+Note: newly inserted images will not appear on the webpage until the folder uploads in src is copied to build 
+We as a team could not figure out how to constantly update the build when the database is inserted too. 
+
+
+

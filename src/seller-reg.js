@@ -1,61 +1,58 @@
 import React from 'react';
 
-const SellerReg = () => {
-  return (
-    <div>
-      <section className="seller_reg-header"></section>
 
-      <div className="seller_reg-text-box">
-        <h1>Siwaka Street Eats</h1>
-        <p>Build your business online with Siwaka Street Eats</p>
-      </div>
+const seller_reg = () => {
+    return (
+      <div className='seller_reg-body'>
 
-      <section className="seller_reg-register">
+
         <div className="seller_reg-container">
-          <div className="seller_reg-title">Registration</div>
-          <form action="#">
-            <div className="seller_reg-user-details">
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">Establishment name</span>
-                <input type="text" placeholder="establishment name" required />
-              </div>
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">First name</span>
-                <input type="text" placeholder="enter first name" required />
-              </div>
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">Last name</span>
-                <input type="text" placeholder="enter last name" required />
-              </div>
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">Mobile number</span>
-                <input type="text" placeholder="enter mobile number" required />
-              </div>
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">Email address</span>
-                <input type="text" placeholder="enter email address" required />
-              </div>
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">Password</span>
-                <input type="password" placeholder="enter password" required />
-              </div>
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">Confirm password</span>
-                <input type="password" placeholder="confirm password" required />
-              </div>
-              <div className="seller_reg-input-box">
-                <span className="seller_reg-details">Mpesa paybill</span>
-                <input type="text" placeholder="enter mpesa paybill" required />
-              </div>
+            <div className="seller_reg-form-box">
+                <h1 id="seller_reg-title">Business Registration Form</h1>
+                <form action="/submit" method="POST" enctype="multipart/form-data">
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="personName">Name of Person:</label>
+                        <input type="text" id="personName" name="personName" required />
+                    </div>
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="businessName">Name of Business:</label>
+                        <input type="text" id="businessName" name="businessName" required />
+                    </div>
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="foodLicense">Image of Food License:</label>
+                        <input type="file" id="foodLicense" name="foodLicense" accept="image/*" required />
+                    </div>
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="paymentMode">Mode of Payment:</label>
+                        <select id="paymentMode" name="paymentMode" required>
+                            <option value="Cash">Cash</option>
+                            <option value="Mpesa">Mpesa</option>
+                        </select>
+                    </div>
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="businessImage">Image of Business:</label>
+                        <input type="file" id="businessImage" name="businessImage" accept="image/*" required />
+                    </div>
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="location">Location:</label>
+                        <input type="text" id="location" name="location" required />
+                    </div>
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div className="seller_reg-form-group">
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" id="password" name="password" required />
+                    </div>
+                    <div className="seller_reg-btn-field">
+                        <button  className='seller_reg-submit' type="submit">Submit</button>
+                    </div>
+                </form>
             </div>
-            <div className="seller_reg-button">
-              <input type="submit" value="Register" />
-            </div>
-          </form>
         </div>
-      </section>
-    </div>
-  );
+        </div>
+    );
 };
 
-export default SellerReg;
+export default seller_reg;
