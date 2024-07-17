@@ -7,7 +7,8 @@ import BuyerHome from './buyer-home';
 import DashboardSeller from './dashboard_seller';
 import SellerHomepage from './seller_home';
 import DashboardBuyer from './dashboard_buyer';
-import Menu from './menu'; // Make sure MenuPage is correctly imported
+import Menu from './menu'; 
+import Shop from './shop_1';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/homepage-user" element={<BuyerHome/>} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/shop/:shopName" element={<Shop />} /> 
         <Route path="/seller-homepage" element={<SellerHomepage/>} />
         <Route path="/dashboard_seller" element={<DashboardSeller />} />
         <Route path="/seller-register" element={<SellerReg />} />

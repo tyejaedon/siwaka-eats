@@ -1,54 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from './Navigation';
 import Footer from './Footer';
-import shop1 from './assets/shop_1.jpeg';
-import shop2 from './assets/shop_2.jpg';
-import shop3 from './assets/shop_3.jpg';
-import shop4 from './assets/shop_4.jpeg';
+import { Link } from 'react-router-dom';
 
 const BuyerHome = () => {
+  const [shops, setShops] = useState([]);
+
+  useEffect(() => {
+    // Fetch shop data from the server
+    fetch('/shops') // Replace with your actual API endpoint URL
+      .then(response => response.json())
+      .then(data => setShops(data))
+      .catch(error => console.error(error));
+  }, []);
+
   return (
     <div className='buyer_home-body'>
       <Navigation />
 
       <div className="buyer_home-wrapper">
-        <div className="buyer_home-shop">
-          <a  className='buyer_home-links' href="shop_1.html">
-            <img src= {shop1} className="buyer_home-images" alt="Shop 1" />
-            <p className='buyer_home-p'>
-              <b>Shop:</b> Benny's Eatery
-              <br />
-              <b>Loved by Customers:</b> fries, chicken
-            </p>
-          </a>
-        </div>
-
-        <div className="buyer_home-shop">
-          <img src = {shop2} className="buyer_home-images" alt="Shop 2" />
-          <p className='buyer_home-p'>
-            <b>Shop:</b> Sharons Dishes
-            <br />
-            <b>Loved by Customers:</b> fries, chicken
-          </p>
-        </div>
-
-        <div className="buyer_home-shop">
-          <img src= {shop3} className="buyer_home-images" alt="Shop 3" />
-          <p className='buyer_home-p'>
-            <b>Shop:</b> Legacy Foods
-            <br />
-            <b>Loved by Customers:</b> fries, chicken
-          </p>
-        </div>
-
-        <div className="buyer_home-shop">
-          <img src= {shop4} className="buyer_home-images" alt="Shop 4" />
-          <p className='buyer_home-p'>
-            <b>Shop:</b> Rices and Rides
-            <br />
-            <b>Loved by Customers:</b> fries, chicken
-          </p>
-        </div>
+        {shops.map((shop) => (
+          <div className="buyer_home-shop" key={shop.name}> 
+          <Link to={`/shop/${shop.name}`} className='buyer_home-links'>
+      
+              <img src={shop.imageUrl} className="buyer_home-images" alt={`Shop ${shop.name}`} />
+              <p className='buyer_home-p'>
+                <b>Shop:</b> {shop.name}
+                <br />
+                {shop.menuItems && ( // Check if menuItems exist
+                  <div className="food-comodities">
+                    <h3>Loved by Customers:</h3>
+                    <span>
+                      {/* Slice the first 3 menu items and join with commas */}
+                      {shop.menuItems.slice(0, 3).join(', ')}
+                    </span>
+                  </div>
+                )}
+              </p>
+              </Link>
+          </div>
+        ))}
       </div>
 
       <Footer />

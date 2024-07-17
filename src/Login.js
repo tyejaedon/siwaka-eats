@@ -9,29 +9,38 @@ const LoginPage = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+  
     try {
       const response = await fetch('/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, isBusiness }), // Include isBusiness in the body
         credentials: 'include', // Include credentials if using sessions
       });
-
-      if (response.ok) {
-        // Handle successful login
-        navigate('/seller-homepage'); // Redirect as needed
-      } else {
+  
+      if (!response.ok) {
         // Handle failed login
         const errorMessage = await response.text();
         alert(errorMessage);
+      } else {
+        const data = await response.json();
+        if (data.message === 'Login Successful!') {
+          // Successful login, redirect based on redirectUrl
+          window.location.href = data.redirectUrl;
+        } else {
+          // Handle unexpected server response
+          alert(data.message); // Example error handling
+        }
       }
     } catch (error) {
       console.error('Error logging in:', error);
       alert('Error logging in. Please try again.');
     }
   };
+  
+  
 
   const handleRegister = () => {
     if (isBusiness) {

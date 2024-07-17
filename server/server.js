@@ -76,7 +76,7 @@ app.post('/submit', upload.fields([
 
 // Handle login request
 app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, isBusiness } = req.body;
 
   try {
     const connection = await pool.getConnection();
@@ -85,7 +85,7 @@ app.post('/login', async (req, res) => {
     connection.release();
 
     if (results.length === 0) {
-      return res.status(401).send('Invalid email or password');
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     const user = results[0];
@@ -95,19 +95,74 @@ app.post('/login', async (req, res) => {
       sessionStore.businessImage = user.businessImage;
       sessionStore.businessName = user.businessName;
       sessionStore.email = user.email;
-      // Successful login
-      return res.redirect('/seller-homepage'); // Redirect as needed
+
+      // Successful login, send JSON with redirectUrl
+      const redirectUrl = isBusiness ? 'http://localhost:3001/seller-homepage' : 'http://localhost:3001/homepage-user';
+      return res.status(200).json({ message: 'Login Successful!', redirectUrl });
     } else {
       // Incorrect password
-      return res.status(401).send('Invalid email or password');
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
   } catch (err) {
     console.error('Error during login:', err);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+
+  
+});
+app.get('/shops', async (req, res) => {
+  const connection = await pool.getConnection();
+  try {
+    const query = `
+ SELECT r.businessName, MIN(r.businessImage) AS businessImage, mi.menu_item
+FROM registrations AS r
+LEFT JOIN menu_items AS mi ON r.email = mi.email
+GROUP BY r.businessName, mi.menu_item;
+ `;
+    const [results] = await connection.execute(query);
+
+    const shops = results.reduce((acc, shop) => {
+      const existingShop = acc.find(s => s.name === shop.businessName);
+      if (existingShop) {
+        existingShop.menuItems.push(shop.menu_item);
+      } else {
+        acc.push({
+          name: shop.businessName,
+          imageUrl: shop.businessImage ? path.relative(__dirname, shop.businessImage.toString()) : null,
+          menuItems: [shop.menu_item],
+        });
+      }
+      return acc;
+    }, []);
+
+    res.json(shops); // Send array of shop objects with menu items
+  } catch (error) {
+    console.error('Error fetching shops:', error);
+    res.status(500).send('Error fetching shops');
+  } finally {
+    connection.release();
+  }
+});
+app.get('/api/shops/:shopName/menu', async (req, res) => {
+  const { shopName } = req.params;
+  
+  try {
+    const [rows] = await pool.query(
+      `SELECT menu_items.menu_item, menu_items.price
+       FROM menu_items
+       INNER JOIN registrations ON menu_items.email = registrations.email
+       WHERE registrations.businessName = ?`,
+      [shopName]
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching menu items:', error);
+    res.status(500).send('Internal server error');
   }
 });
 
-// Retrieve user data
+
+// Retrieve user data if a business
 app.get('/userdata', (req, res) => {
   if (sessionStore.businessName) {
     res.json({ businessName: sessionStore.businessName, businessImage: sessionStore.businessImage });
@@ -125,10 +180,10 @@ app.post('/menuitems', upload.fields([{ name: 'food_image', maxCount: 1 }]), asy
   try {
     const query = "INSERT INTO menu_items (menu_item, price, image, email) VALUES (?, ?, ?, ?)";
     await connection.execute(query, [menuItem, price, image, sessionStore.email]);
-    res.redirect('/menu.html?success=1');
+    res.json({ success: true, message: 'Menu item added successfully' });
   } catch (err) {
     console.error('Error saving to database:', err);
-    res.status(500).send('Error saving to database');
+    res.status(500).json({ success: false, message: 'Error saving to database' });
   } finally {
     connection.release();
   }

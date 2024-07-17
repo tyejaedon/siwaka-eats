@@ -82,6 +82,35 @@ width: 48%;
   font-size: 1em;
   color: #333;
 }
+.login-checkbox {
+  /* Hide the default checkbox */
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+
+  /* Style the unchecked state */
+  background-color: #fff;
+
+  /* Style the checked state */
+  &:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+
+    /* Add a checkmark icon */
+    &::after {
+      content: "\02713"; /* Checkmark symbol (Unicode) */
+      font-size: 12px;
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
 
 .login-flex {
   display: flex;
@@ -872,6 +901,7 @@ p {
 .buyer_home-p {
   font-family: "Dancing Script", cursive;
   text-align: center;
+  font-size: 14px;
 }
 
 @media screen and (max-width: 768px) {
@@ -980,7 +1010,10 @@ p {
   --box-shadow: 0 2rem 3rem var(--color-light);
 }
 
-* {
+
+
+
+.dashboard_us-body {
   margin: 0;
   padding: 0;
   outline: 0;
@@ -989,13 +1022,6 @@ p {
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;
-}
-
-html {
-  font-size: 14px;
-}
-
-body {
   width: 100vw;
   height: 100vh;
   font-family: poppins, sans-serif;
@@ -1006,33 +1032,27 @@ body {
   color: var(--color-dark);
 }
 
-a {
-  color: var(--color-dark);
-}
 
-img {
-  display: block;
-  width: 100%;
-}
 
-h1 {
+
+.dashboard_us-h1 {
   font-weight: 800;
   font-size: 1.8rem;
 }
 
-h2 {
+.dashboard_us-h2 {
   font-size: 1.4rem;
 }
 
-h3 {
+.dashboard_us-h3 {
   font-size: 0.87rem;
 }
 
-h4 {
+.dashboard_us-h4 {
   font-size: 0.8rem;
 }
 
-h5 {
+.dashboard_us-h4{
   font-size: 0.77rem;
 }
 
@@ -1044,13 +1064,11 @@ small {
   color: var(--color-info-dark);
 }
 
-p {
+.dashboard_us-p {
   color: var(--color-dark-variant);
 }
 
-b {
-  color: var(--color-dark);
-}
+
 
 .dashboard_us-header {
   display: flex;
@@ -1504,4 +1522,102 @@ main .dash_buyer-date input[type="date"] {
   display: none;
 }
 
+  /* shop_1*/
+  /* Basic styling for the navigation bar */
+
+
+
+
+.shop_1-image {
+  background-image: url("./assets/shop_1bg.jpeg");
+  height: 30vh;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end; /* Align profile image to bottom */
+}
+
+.shop_1-profile {
+  position: relative;
+  background-image: url("./assets/shop_profile.png");
+  background-size: 100px;
+  background-repeat: no-repeat;
+  border-radius: 50px;
+  z-index: 200;
+  height: 100px;
+  width: 100px;
+  border: solid white;
+  align-self: flex-end;
+}
+
+button {
+  background-color: inherit;
+  border: none;
+}
+
+.shop_1-menu {
+  border: 1px solid;
+  margin-left: 25%;
+    margin-right: 25%;
+  margin-top: 10%;
+  background-color: honeydew;
+  padding: 10px;
+}
+
+.shop_1-p {
+  letter-spacing: 3px;
+  word-spacing: 6px;
+  line-height: 18px;
+ margin: 15px auto;
+  text-align: center;
+  font-size: 15px;
+}
+
+.shop_1-h2 {
+  color: chocolate;
+  text-align: center;
+  font-family: cursive;
+  font-size: 28px;
+}
+
+.shop_1-h2,
+.shop_1-h1 {
+  text-align: center;
+}
+
+#shop_1-checkout *:hover {
+  color: green;
+}
+
+.shop_1-check:hover {
+  color: green;
+}
+
+.shop_1-check > *:active {
+  box-shadow: 0 0 5px green; /* Add a green box-shadow on active */
+}
+
+.shop_1-cancel:hover {
+  color: red;
+}
+
+#shop_1-ordered {
+  display: flex;
+  flex-direction: column; /* Display ordered items vertically */
+  width: 100%; /* Full width */
+  /* Adjust height based on your needs */
+}
+
+.shop_1-checkout {
+  display: flex;
   
+  margin: 0 50%; /* Add some margin above and below */
+}
+
+@media screen and (max-width: 768px) {
+  .shop_1-menu {
+    margin: 15px 0;
+    width: 100%; /* Make menu full width on smaller screens */
+  }
+}
+

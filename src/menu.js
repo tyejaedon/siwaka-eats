@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Nav_seller from './Navigation_seller';
+import axios from 'axios';
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const fetchMenuItems = async () => {
@@ -18,10 +20,31 @@ const Menu = () => {
     fetchMenuItems();
   }, []);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
+    try {
+      const response = await axios.post('/menuitems', formData);
+      if (response.status === 200) {
+        setSuccess(true);
+        event.target.reset();
+        setTimeout(() => setSuccess(false), 3000);
+
+        // Fetch the updated menu items
+        const updatedResponse = await fetch('/items');
+        const updatedMenuItemsData = await updatedResponse.json();
+        setMenuItems(updatedMenuItemsData);
+      }
+    } catch (error) {
+      console.error('Error adding menu item:', error);
+    }
+  };
+
   return (
     <div className='menu-body'>
       <div className="menu-shop_image">
-       <Nav_seller/>
+        <Nav_seller/>
         <span className="menu-shop_profile"></span>
       </div>
       <br />
@@ -49,12 +72,14 @@ const Menu = () => {
       <div className="menu-container">
         <h1>New Menu Item</h1>
         {/* Success Message */}
-        <div id="successMessage" style={{ display: 'none', color: 'green' }}>
-          Menu item added successfully!
-        </div>
+        {success && (
+          <div id="successMessage" style={{ color: 'green' }}>
+            Menu item added successfully!
+          </div>
+        )}
 
-        <form id="menuForm" action="/menuitems" method="POST" encType="multipart/form-data">
-          <label className='menu-label'  htmlFor="menuItem">Menu Item:</label>
+        <form id="menuForm" onSubmit={handleSubmit} encType="multipart/form-data">
+          <label className='menu-label' htmlFor="menuItem">Menu Item:</label>
           <input type="text" id="menuItem" name="menuItem" required />
 
           <label className='menu-label' htmlFor="price">Price:</label>

@@ -14,7 +14,7 @@ const Navigation = () => {
     <nav>
       <ul className="navbar">
         <li><Link to="/homepage-user">Home</Link></li>
-        <li><Link to="/dashboard_us">Dashboard</Link></li>
+        <li><Link to="/dashboard_buyer">Dashboard</Link></li>
         <li><a href="#footer" onClick={handleContactUsClick}>Contact Us</a></li>
       </ul>
     </nav>
